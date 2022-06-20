@@ -50,7 +50,9 @@ service: "omada-controller-web": {
 service: "omada-controller-tcp": {
 	apiVersion: "v1"
 	kind:       "Service"
-	metadata:   #metadata
+	metadata:   #metadata & {
+		name: "omada-controller-tcp"
+	}
 	spec: {
 		type:     "LoadBalancer"
 		ports:    #servicePortsTcp

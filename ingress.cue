@@ -29,10 +29,11 @@ let omadaService = service."omada-controller-web"
 	},
 ]
 
-ingress: "omada-controller": {
+ingress: "omada-controller-web": {
 	apiVersion: "networking.k8s.io/v1"
 	kind:       "Ingress"
 	metadata:   #metadata & {
+		name: "omada-controller-web"
 		annotations: {
 			"traefik.ingress.kubernetes.io/router.tls":                "true"
 			"traefik.ingress.kubernetes.io/router.tls.certresolver":   "pizzaResolver"
