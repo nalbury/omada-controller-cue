@@ -11,6 +11,7 @@ resources: [ for r in kubeResources for k in r {k}]
 kubeResources: [
 	service,
 	statefulset,
+	ingress,
 ]
 
 command: ls: {

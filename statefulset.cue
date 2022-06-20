@@ -7,48 +7,17 @@ import (
 
 statefulset: [string]: appsv1.#StatefulSet
 
-let defaultImage = "mbently/omada-controller:latest"
+let defaultImage = "mbentley/omada-controller:latest"
 let baseMountPath = "/opt/tplink/EAPController"
-
-#ports: [
-	corev1.#ContainerPort & {
-		containerPort: 8088
-		name:          "http"
-	},
-	corev1.#ContainerPort & {
-		containerPort: 8043
-		name:          "manageHttps"
-	},
-	corev1.#ContainerPort & {
-		containerPort: 8843
-		name:          "portalHttps"
-	},
-	corev1.#ContainerPort & {
-		containerPort: 29810
-		protocol:      "UDP"
-	},
-	corev1.#ContainerPort & {
-		containerPort: 29811
-	},
-	corev1.#ContainerPort & {
-		containerPort: 29812
-	},
-	corev1.#ContainerPort & {
-		containerPort: 29813
-	},
-	corev1.#ContainerPort & {
-		containerPort: 29814
-	},
-]
 
 #envVars: [
 	corev1.#EnvVar & {
 		name:  "MANAGE_HTTP_PORT"
-		value: "8088"
+		value: "80"
 	},
 	corev1.#EnvVar & {
 		name:  "MANAGE_HTTPS_PORT"
-		value: "8043"
+		value: "443"
 	},
 	corev1.#EnvVar & {
 		name:  "PORTAL_HTTP_PORT"
@@ -124,12 +93,18 @@ let baseMountPath = "/opt/tplink/EAPController"
 			{
 				name:         string | *#defaultName
 				image:        string | *defaultImage
-				ports:        #ports
+				ports:        #ports + #webPorts
 				env:          #envVars
 				volumeMounts: #volumeMounts
 			},
 		]
 		volumes: #volumes
+		securityContext: sysctls: [
+			{
+				name:  "net.ipv4.ip_unprivileged_port_start"
+				value: "0"
+			},
+		]
 	}
 }
 
@@ -141,7 +116,7 @@ statefulset: "omada-controller": {
 		selector: {
 			matchLabels: #selector
 		}
-		serviceName:          string | *#defaultName
+		serviceName:          string | *"omada-controller-web"
 		replicas:             int | *1
 		template:             #podTemplate
 		volumeClaimTemplates: #volumeClaimTemplates
