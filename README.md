@@ -3,7 +3,7 @@
 Cue configs for running the omada controller container as a stateful set in kube.
 
 Deploys:
-
+```
 ➜  omada-controller-cue git:(main) cue ls              
 Kind          App                Name
 Service       omada-controller   omada-controller-web
@@ -11,7 +11,7 @@ Service       omada-controller   omada-controller-tcp
 Service       omada-controller   omada-controller-udp
 StatefulSet   omada-controller   omada-controller
 Ingress       omada-controller   omada-controller-web
-
+```
 
 ## Usage
 
