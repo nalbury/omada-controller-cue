@@ -91,11 +91,12 @@ let baseMountPath = "/opt/tplink/EAPController"
 	spec: corev1.#PodSpec & {
 		containers: [
 			{
-				name:         string | *#defaultName
-				image:        string | *defaultImage
-				ports:        #ports + #webPorts
-				env:          #envVars
-				volumeMounts: #volumeMounts
+				name:            string | *#defaultName
+				image:           string | *defaultImage
+				imagePullPolicy: string | *"Always"
+				ports:           #ports + #webPorts
+				env:             #envVars
+				volumeMounts:    #volumeMounts
 			},
 		]
 		volumes: #volumes
