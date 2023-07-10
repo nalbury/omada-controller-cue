@@ -20,7 +20,7 @@ let omadaService = service."omada-controller-web"
 					backend: {
 						service: {
 							name: omadaService.metadata.name
-							port: name: string | *"http"
+							port: name: string | *"managehttps"
 						}
 					}
 				},
